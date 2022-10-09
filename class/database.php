@@ -1,42 +1,91 @@
 <?php
 
+require_once __DIR__ . '/../main_config.php';
+date_default_timezone_set('Asia/Hong_Kong');
 class database
+
 {
+
     // These variables will help you to connect with database
-    private $hostname = "localhost";
-    private $username = "root";
-    private $password = "";
-    private $dbname = "obotunji";
 
-    // private $hostname = "remotemysql.com";
-    // private $username = "u5CBLhyagE";
-    // private $password = "lNOLqk1oAj";
-    // private $dbname = "u5CBLhyagE";
+    private static $hostname = "localhost";
+
+    private static $username = "root";
+
+    private static $password = "";
+
+    private static $dbname = "obotunji";
 
 
-    // This $link variable is a part of database class which will help you run all the query
-    protected $link;
+
+    //    private static $hostname = "localhost";
+
+    //    private static $username = "root";
+
+    //    private static $password = "";
+
+    //    private static $dbname = "boshinghk";
+
+
+
+    private static $connection;
+
+    protected $link; // legacy code use that variable
+
+
 
     public function __construct()
+
     {
-        $this->connection();
-        # code...
+
+        $this->link = static::conn();
     }
 
-    public function connection()
+
+
+    public static function query($query)
     {
 
-        // This function will help you connect with the database
-        $this->link = mysqli_connect($this->hostname, $this->username, $this->password, $this->dbname); //connected with database
+        return mysqli_query(static::conn(), $query);
+    }
 
-        if ($this->link) {
-            // echo "connected";
-        } else {
-            echo "not connected";
+
+
+    public static function conn()
+    {
+
+        if (static::$connection) {
+
+            return static::$connection;
         }
 
-        # code...
+        // This function will help you connect with the database
+
+        static::$connection = mysqli_connect(static::$hostname, static::$username, static::$password, static::$dbname); //connected with database
+
+
+
+        if (static::$connection) {
+
+            return static::$connection;
+        } else {
+
+            echo "not connected";
+
+            die("Connection failed: " . mysqli_connect_error());
+        }
+    }
+
+
+
+    public function connection()
+
+    {
+
+        return static::conn();
     }
 }
 
-$obj = new database; //database class object
+
+
+$obj = new database;

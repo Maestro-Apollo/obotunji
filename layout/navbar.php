@@ -18,7 +18,13 @@
 
 
                     <li class="nav-item p-1">
-                        <a class="nav-link text-dark font-weight-bold" href="index.php">Home</a>
+                        <a class="nav-link text-dark font-weight-bold" href="admin.php">Admin</a>
+                    </li>
+                    <li class="nav-item p-1">
+                        <a class="nav-link text-dark font-weight-bold" href="view-code.php">Code</a>
+                    </li>
+                    <li class="nav-item p-1">
+                        <a class="nav-link text-dark font-weight-bold" href="view-users.php">Users</a>
                     </li>
                     <li class="nav-item p-1">
                         <a class="nav-link text-dark font-weight-bold" href="logout.php">Logout
@@ -32,6 +38,10 @@
 
                     <?php } else { ?>
                     <!-- These are when user is not logged in -->
+                    <li class="nav-item p-1">
+                        <a class="nav-link text-dark font-weight-bold" href="register.php">Home
+                        </a>
+                    </li>
                     <li class="nav-item p-1">
                         <a class="nav-link text-dark font-weight-bold" href="login.php">Login
                         </a>

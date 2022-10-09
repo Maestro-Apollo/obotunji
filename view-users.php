@@ -45,14 +45,14 @@ if (isset($_SESSION['admin'])) {
                 <table id="userTable" class="table table-striped table-bordered">
                     <thead>
                         <tr>
-                            <th>ID</th>
+                            <th>User ID</th>
+                            <th>First Name</th>
+                            <th>Last Name</th>
+                            <th>Email</th>
                             <th>S Code</th>
                             <th>L Code</th>
                             <th>Url</th>
                             <th>Status</th>
-
-
-
                         </tr>
                     </thead>
 
@@ -89,10 +89,20 @@ if (isset($_SESSION['admin'])) {
             'copy', 'csv', 'excel', 'pdf', 'print'
         ],
         'ajax': {
-            'url': 'ajaxAllCode.php',
+            'url': 'ajax-user.php',
+            error: function(error) {
+                // to see what the error is
+                console.log(error.responseText);
+            }
         },
         'columns': [{
-            data: 'code_id'
+            data: 'user_id'
+        }, {
+            data: 'fname'
+        }, {
+            data: 'lname'
+        }, {
+            data: 'email'
         }, {
             data: 's_code'
         }, {

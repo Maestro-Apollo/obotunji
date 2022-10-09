@@ -6,51 +6,47 @@ class signInUp extends database
 {
     protected $link;
 
-    public function signInFunction()
+    public function matchingFunction()
     {
-        if (isset($_POST['signIn'])) {
-            $username = $_POST['username'];
-            $password = $_POST['password'];
+        if (isset($_POST['submit'])) {
+            $fname = addslashes(trim($_POST['fname']));
+            $lname = addslashes(trim($_POST['lname']));
+            $email = addslashes(trim($_POST['email']));
+            $code = addslashes(trim($_POST['code']));
 
-            $sql = "select * from admin where admin_username = '$username' ";
+            $sql = "SELECT * from code_tbl where s_code = '$code' or l_code = '$code'";
             $res = mysqli_query($this->link, $sql);
-
-            $sql2 = "SELECT * from employee_tbl where employee_username = '$username' ";
-            $res2 = mysqli_query($this->link, $sql2);
             if (mysqli_num_rows($res) > 0) {
+
                 $row = mysqli_fetch_assoc($res);
-                $pass = $row['admin_password'];
+                $url = $row['url'];
+                $status = $row['status'];
+                $id = $row = $row['code_id'];
 
-                if ($password == $pass) {
-                    $_SESSION['admin'] = $username;
-                    header('location:index.php');
-                    return $res;
-                } else {
-                    $msg = "Wrong password";
-                    return $msg;
-                }
-            } else if (mysqli_num_rows($res2) > 0) {
-                $row = mysqli_fetch_assoc($res2);
-                $pass = $row['employee_password'];
+                if ($status == 'Not Used') {
 
-                if ($password == $pass) {
-                    $_SESSION['name'] = $username;
-                    header('location:inventory-list.php');
-                    return $res;
+                    $sqlUpdate = "UPDATE code_tbl SET `status` = 'Used' WHERE `code_id` = $id";
+                    $resUpdate = mysqli_query($this->link, $sqlUpdate);
+
+                    if ($resUpdate) {
+                        $sqlInsert = "INSERT INTO `user_tbl` (`user_id`, `fname`, `lname`, `email`, `code_id`) VALUES (NULL, '$fname', '$lname', '$email', $id)";
+                        $resInsert = mysqli_query($this->link, $sqlInsert);
+
+                        if ($resInsert) {
+                            header('Location:' . $url);
+                        }
+                    }
                 } else {
-                    $msg = "Wrong password";
-                    return $msg;
+                    return 'code already used';
                 }
             } else {
-                $msg = "Invalid Information";
-                return $msg;
+                return 'code not valid ';
             }
         }
-        # code...
     }
 }
 $obj = new signInUp;
-$objSignIn = $obj->signInFunction();
+$objSignIn = $obj->matchingFunction();
 
 ?>
 
@@ -64,7 +60,7 @@ $objSignIn = $obj->signInFunction();
     <?php include('layout/style.php'); ?>
     <style>
     body {
-        font-family: 'Raleway', sans-serif;
+        font-family: 'Lato', sans-serif;
     }
 
     .navbar-brand {
@@ -86,6 +82,12 @@ $objSignIn = $obj->signInFunction();
 
             <div class="row">
                 <div class="col-md-6">
+                    <?php if (isset($objSignIn)) { ?>
+                    <div class="alert alert-warning alert-dismissible">
+                        <button type="button" class="close" data-dismiss="alert">&times;</button>
+                        <strong><?php echo $objSignIn ?></strong>
+                    </div>
+                    <?php } ?>
                     <form action="" method="post" data-parsley-validate>
 
                         <div class="text-justify">
@@ -109,11 +111,11 @@ $objSignIn = $obj->signInFunction();
                             required>
                         <input type="email" class="form-control mt-4 p-4 bg-light" name="email" placeholder="Email"
                             required>
-                        <input type="number" minlength="38" class="form-control mt-4 p-4 bg-light" name="code"
-                            placeholder="Redeem Code" required>
+                        <input type="text" minlength="38" maxlength="38" class="form-control mt-4 p-4 bg-light"
+                            name="code" placeholder="Redeem Code" required>
 
 
-                        <button type="submit" name="signIn"
+                        <button type="submit" name="submit"
                             class="btn btn-block font-weight-bold log_btn btn-lg mt-4">Yes Let Me In</button>
 
 
