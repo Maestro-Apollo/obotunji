@@ -8,37 +8,39 @@ class Code extends database
   {
     $type = $_POST['exampleRadios'];
 
-    $s_code = NULL;
-    $l_code = NULL;
+    $code = $_POST['code'];
 
-    ($type == 'STD') ? $s_code = $_POST['code'] : $l_code = $_POST['code'];
+    function generateRandomString($length, $type)
+    {
+      $characters = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+      $charactersLength = strlen($characters);
+      $randomString = '';
+      $randomString .= $type;
+      for ($i = 0; $i < $length; $i++) {
+        $randomString .= $characters[rand(0, $charactersLength - 1)];
+      }
+      return $randomString;
+    }
 
-    $search = ($type == 'STD') ? $s_code : $l_code;
+    $x = 0;
 
-    $url = $_POST['url'];
+    for ($i = 0; $i < $code; $i++) {
+
+      $theCode = generateRandomString(35, $type);
 
 
-    $sqlFind = "SELECT * from code_tbl where s_code = '$search' or l_code = '$search'";
-    $resFind = mysqli_query($this->link, $sqlFind);
-    if (mysqli_num_rows($resFind) > 0) {
-      return '<div class="alert alert-warning alert-dismissible">
-            <button type="button" class="close" data-dismiss="alert">&times;</button>
-            <strong>Code Already Exist!</strong>
-          </div>';
-    } else {
-      $sql = "INSERT INTO `code_tbl` (`code_id`, `s_code`, `l_code`, `url`, `status`) VALUES (NULL, '$s_code', '$l_code', '$url','Not Used')";
+      $sql = "INSERT INTO `code_tbl` (`code_id`, `code`, `created_at`,`status`) VALUES (NULL, '$theCode', current_timestamp(), 'Not Used')";
       $res = mysqli_query($this->link, $sql);
       if ($res) {
-        return '<div class="alert alert-success alert-dismissible">
-                <button type="button" class="close" data-dismiss="alert">&times;</button>
-                <strong>Code is Added</strong>
-              </div>';
-      } else {
-        return '<div class="alert alert-danger alert-dismissible">
-                <button type="button" class="close" data-dismiss="alert">&times;</button>
-                <strong>Invalid!</strong>
-              </div>';
+        $x++;
       }
+    }
+
+    if ($x > 0) {
+      return '<div class="alert alert-success alert-dismissible fade show">
+      <button type="button" class="close" data-dismiss="alert">&times;</button>
+      <strong>Code Added!</strong>
+  </div>';
     }
   }
 }

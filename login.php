@@ -20,7 +20,7 @@ class signInUp extends database
                 $pass = $row['admin_password'];
 
                 if ($password == $pass) {
-                    $_SESSION['admin'] = $username;
+                    $_SESSION['admin5'] = $username;
                     header('location:admin.php');
                     return $res;
                 } else {

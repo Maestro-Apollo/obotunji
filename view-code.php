@@ -1,6 +1,6 @@
 <?php
 session_start();
-if (isset($_SESSION['admin'])) {
+if (isset($_SESSION['admin5'])) {
 } else {
     header('location: login.php');
 }
@@ -46,10 +46,9 @@ if (isset($_SESSION['admin'])) {
                     <thead>
                         <tr>
                             <th>ID</th>
-                            <th>S Code</th>
-                            <th>L Code</th>
-                            <th>Url</th>
-                            <th>Status</th>
+                            <th>Code</th>
+                            <th>Date</th>
+
 
 
 
@@ -94,13 +93,9 @@ if (isset($_SESSION['admin'])) {
         'columns': [{
             data: 'code_id'
         }, {
-            data: 's_code'
+            data: 'code'
         }, {
-            data: 'l_code'
-        }, {
-            data: 'url'
-        }, {
-            data: 'status'
+            data: 'created_at'
         }, ]
     });
     </script>

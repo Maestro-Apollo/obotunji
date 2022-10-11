@@ -1,6 +1,10 @@
 <?php
 session_start();
 
+
+
+
+
 include('class/database.php');
 class signInUp extends database
 {
@@ -14,12 +18,12 @@ class signInUp extends database
             $email = addslashes(trim($_POST['email']));
             $code = addslashes(trim($_POST['code']));
 
-            $sql = "SELECT * from code_tbl where s_code = '$code' or l_code = '$code'";
+            $sql = "SELECT * from code_tbl where code = '$code'";
             $res = mysqli_query($this->link, $sql);
             if (mysqli_num_rows($res) > 0) {
 
                 $row = mysqli_fetch_assoc($res);
-                $url = $row['url'];
+                $url = 'https://app.portal.vivomeetings.com/sign-up?product=vivomeetings_free_trial';
                 $status = $row['status'];
                 $id = $row = $row['code_id'];
 
@@ -33,7 +37,29 @@ class signInUp extends database
                         $resInsert = mysqli_query($this->link, $sqlInsert);
 
                         if ($resInsert) {
-                            header('Location:' . $url);
+
+                            $to = 'redemption@vivomeetings.com';
+                            $subject = 'Redeem Code Status';
+                            $from = 'info@boshinghk.com';
+
+                            $headers  = "From: " . $from . "\n";
+                            $headers .= "Cc: " . $from . "\n";
+                            $headers .= "X-Sender: " . $from . "\n";
+                            $headers .= 'X-Mailer: PHP/' . phpversion();
+                            $headers .= "X-Priority: 1\n"; // Urgent message!
+                            $headers .= "Return-Path: " . $from . "\n"; // Return path for errors
+                            $headers .= "MIME-Version: 1.0\r\n";
+                            $headers .= "Content-Type: text/html; charset=iso-8859-1\n";
+
+                            $message = '';
+                            $message .= 'First Name: ' . $fname . "\r\n" . '<br>';
+                            $message .= 'Last Name: ' . $lname . "\r\n" . '<br>';
+                            $message .= 'Email: ' . $email . "\r\n" . '<br>';
+                            $message .= 'Code: ' . $code . "\r\n" . '<br>';
+
+                            if (mail($to, $subject, $message, $headers)) {
+                                header('Location:' . $url);
+                            }
                         }
                     }
                 } else {
@@ -90,17 +116,23 @@ $objSignIn = $obj->matchingFunction();
                     <?php } ?>
                     <form action="" method="post" data-parsley-validate>
 
-                        <div class="text-justify">
-                            <p class="font-weight-bold pt-5 pb-4">
-                                Please share your name, email, and purchase code to
-                                get subscribed.
-                                After your submission, you will be redirected to sign up for a free trial Vivomeetings
-                                account.
-                                The free account would be converted to what you paid for within 24 to 48 hours.
-                                If you have any questions or issues with redemption, <br>please email our team
-                                <a href="mailto:redemption@vivomeetings.com">redemption@vivomeetings.com</a>
-                                <br>Thanks so much and happy to have you.
-                                <br><br>Maria Dawson
+                        <div class="pt-3">
+                            <p>
+
+                                Please share your name, email, and purchase code to get subscribed. After your
+                                submission, you will be redirected to sign up for a free trial Vivomeetings account.
+                                The
+                                free account would be converted to what you paid for within 24 to 48 hours.
+                                <br><br>
+
+                                If you have any questions or issues with redemption, please email our team
+                                redemption@vivomeetings.com
+                                <br><br>
+
+                                Thanks so much and happy to have you.
+                                <br><br>
+
+                                Maria Dawson
                             </p>
 
 

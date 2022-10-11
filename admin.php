@@ -1,6 +1,6 @@
 <?php
 session_start();
-if (isset($_SESSION['admin'])) {
+if (isset($_SESSION['admin5'])) {
 } else {
     header('location:login.php');
 }
@@ -118,18 +118,14 @@ $objSignIn = $obj->signInFunction();
                             </label>
                         </div>
 
-                        <input type="text" id="code" name="code" class="form-control mt-3" placeholder="Code Generate"
-                            data-parsley-type="alphanum" data-parsley-maxlength="38" data-parsley-minlength="38"
-                            required>
-                        <input type="text" name="url" class="form-control mt-3" data-parsley-type="url"
-                            placeholder="URL" required>
+                        <input type="number" placeholder="Number of Codes" class="form-control mt-3" name="code">
 
                         <div class="row pb-5">
-                            <div class="col-6"><button type="button" id="generate"
+                            <div class="col-12"><button type="submit"
                                     class="btn btn-block font-weight-bold btn-success btn-lg mt-4">Generate</button>
                             </div>
-                            <div class="col-6"><button type="submit" name="signIn"
-                                    class="btn btn-block font-weight-bold btn-info btn-lg mt-4">Submit</button></div>
+                            <!-- <div class="col-6"><button type="submit" name="signIn"
+                                    class="btn btn-block font-weight-bold btn-info btn-lg mt-4">Submit</button></div> -->
                         </div>
 
 

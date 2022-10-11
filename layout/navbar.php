@@ -14,7 +14,7 @@
 
 
                     <!-- If the user is logged in and session is set then these nav option will show -->
-                    <?php if (isset($_SESSION['admin'])) { ?>
+                    <?php if (isset($_SESSION['admin5'])) { ?>
 
 
                     <li class="nav-item p-1">
@@ -23,9 +23,9 @@
                     <li class="nav-item p-1">
                         <a class="nav-link text-dark font-weight-bold" href="view-code.php">Code</a>
                     </li>
-                    <li class="nav-item p-1">
+                    <!-- <li class="nav-item p-1">
                         <a class="nav-link text-dark font-weight-bold" href="view-users.php">Users</a>
-                    </li>
+                    </li> -->
                     <li class="nav-item p-1">
                         <a class="nav-link text-dark font-weight-bold" href="logout.php">Logout
                         </a>
