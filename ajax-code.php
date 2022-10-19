@@ -1,5 +1,6 @@
 <?php
 session_start();
+date_default_timezone_set('Canada/Central');
 
 include('class/database.php');
 class Code extends database

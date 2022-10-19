@@ -55,6 +55,7 @@ if ($request == 1) {
             "code_id" => $i,
             "code" => $row['code'],
             "created_at" => $newDate,
+            "status" => $status,
 
         );
     }

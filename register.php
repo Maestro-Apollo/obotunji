@@ -40,7 +40,7 @@ class signInUp extends database
 
                             $to = 'redemption@vivomeetings.com';
                             $subject = 'Redeem Code Status';
-                            $from = 'info@boshinghk.com';
+                            $from = 'info@promovivomeetings.com';
 
                             $headers  = "From: " . $from . "\n";
                             $headers .= "Cc: " . $from . "\n";
@@ -90,7 +90,7 @@ $objSignIn = $obj->matchingFunction();
     }
 
     .navbar-brand {
-        width: 7%;
+        width: 10%;
     }
 
     .bg_color {
@@ -108,12 +108,7 @@ $objSignIn = $obj->matchingFunction();
 
             <div class="row">
                 <div class="col-md-6">
-                    <?php if (isset($objSignIn)) { ?>
-                    <div class="alert alert-warning alert-dismissible">
-                        <button type="button" class="close" data-dismiss="alert">&times;</button>
-                        <strong><?php echo $objSignIn ?></strong>
-                    </div>
-                    <?php } ?>
+
                     <form action="" method="post" data-parsley-validate>
 
                         <div class="pt-3">
@@ -150,6 +145,12 @@ $objSignIn = $obj->matchingFunction();
                         <button type="submit" name="submit"
                             class="btn btn-block font-weight-bold log_btn btn-lg mt-4">Yes Let Me In</button>
 
+                        <?php if (isset($objSignIn)) { ?>
+                        <div class="alert alert-warning alert-dismissible mt-3">
+                            <button type="button" class="close" data-dismiss="alert">&times;</button>
+                            <strong><?php echo $objSignIn ?></strong>
+                        </div>
+                        <?php } ?>
 
                     </form>
                 </div>

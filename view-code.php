@@ -48,6 +48,7 @@ if (isset($_SESSION['admin5'])) {
                             <th>ID</th>
                             <th>Code</th>
                             <th>Date</th>
+                            <th>Status</th>
 
 
 
@@ -96,6 +97,8 @@ if (isset($_SESSION['admin5'])) {
             data: 'code'
         }, {
             data: 'created_at'
+        }, {
+            data: 'status'
         }, ]
     });
     </script>

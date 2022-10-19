@@ -1,20 +1,19 @@
 <?php
 
 require_once __DIR__ . '/../main_config.php';
-date_default_timezone_set('Asia/Hong_Kong');
 class database
 
 {
 
     // These variables will help you to connect with database
 
-    private static $hostname = "localhost";
+    private static $hostname = "peace.herosite.pro";
 
-    private static $username = "root";
+    private static $username = "etfxpjls_username";
 
-    private static $password = "";
+    private static $password = "57ISOe=jEQ5I";
 
-    private static $dbname = "obotunji";
+    private static $dbname = "etfxpjls_database";
 
 
 

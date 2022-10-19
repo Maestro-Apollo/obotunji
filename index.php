@@ -1,91 +1,125 @@
 <?php
 session_start();
-header('location: register.php');
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Promovivo</title>
     <?php include('layout/style.php'); ?>
-
-
     <style>
+    body {
+        font-family: 'Lato', sans-serif;
+    }
+
     .navbar-brand {
-        width: 10% !important;
+        width: 20%;
     }
 
     .bg_color {
         background-color: #fff !important;
     }
-
-    body {
-        font-family: 'Raleway', sans-serif;
-    }
-
-    .carousel-caption {
-        top: 50%;
-        transform: translateY(-50%);
-        bottom: initial;
-        -webkit-transform-style: preserve-3d;
-        -moz-transform-style: preserve-3d;
-        transform-style: preserve-3d;
-    }
-
-    .carousel .carousel-item {
-        height: 80vh;
-    }
-
-    .carousel-item img {
-        position: absolute;
-        top: 0;
-        left: 0;
-        min-height: 80vh;
-        object-fit: cover;
-
-    }
-
-    section {
-        padding: 60px 0;
-    }
-
-    .carousel-item:after {
-        content: "";
-        display: block;
-        position: absolute;
-        top: 0;
-        bottom: 0;
-        left: 0;
-        right: 0;
-        background: rgba(0, 0, 0, 0.7);
-    }
     </style>
-
 
 </head>
 
 <body class="bg-light">
     <?php include('layout/navbar.php'); ?>
 
-
-
-
-
-
     <section>
-        <div class="container text-center">
-            <a href="./add-stock.php" class="btn log_btn">Add Stock Item</a>
+        <div class="container bg-white pr-4 pl-4 shadow log_section pb-5">
+
+            <div class="row">
+                <div class="col-md-6">
+
+                    <form id="myForm" data-parsley-validate>
+
+                        <div class="pt-3">
+                            <p>
+
+                                Please share your name, email, and purchase code to get subscribed. After your
+                                submission, you will be redirected to sign up for a free trial Vivomeetings account.
+                                The
+                                free account would be converted to what you paid for within 24 to 48 hours.
+                                <br><br>
+
+                                If you have any questions or issues with redemption, please email our team
+                                redemption@vivomeetings.com
+                                <br><br>
+
+                                Thanks so much and happy to have you.
+                                <br><br>
+
+                                Maria Dawson
+                            </p>
+
+
+                        </div>
+                        <input type="text" name="fname" class="form-control p-4  bg-light" placeholder="First Name"
+                            required>
+                        <input type="text" class="form-control mt-4 p-4 bg-light" name="lname" placeholder="Last Name"
+                            required>
+                        <input type="email" class="form-control mt-4 p-4 bg-light" name="email" placeholder="Email"
+                            required>
+                        <input type="text" minlength="38" maxlength="38" class="form-control mt-4 p-4 bg-light"
+                            name="code" placeholder="Redeem Code" required>
+
+
+                        <button type="submit" name="submit"
+                            class="btn btn-block font-weight-bold log_btn btn-lg mt-4">Yes Let Me In</button>
+
+                        <div id="output2"></div>
+
+
+                    </form>
+                </div>
+                <div class="col-md-6">
+                    <img src="./images/1.png" alt="">
+                </div>
+
+                <!-- <form action="" method="post"> -->
+
+                <!-- </form> -->
+            </div>
+
         </div>
+
     </section>
 
 
-
+    <?php include('layout/footer.php'); ?>
 
     <?php include('layout/script.php') ?>
+    <script>
+    $(document).ready(function() {
 
+        $('#myForm').submit(function(e) {
+            e.preventDefault();
+            let formData = new FormData(this);
+            $.ajax({
+                type: "POST",
+                url: "ajax-enter.php",
+                data: formData,
+                contentType: false,
+                processData: false,
+                success: function(response) {
+                    console.log(response);
+                    if (response == 1) {
+                        window.location.href =
+                            "https://app.portal.vivomeetings.com/sign-up?product=vivomeetings_free_trial"
+                    } else {
+                        $('#output2').fadeIn().html(response);
 
+                    }
+                }
+            });
+            this.reset();
+        });
+    })
+    </script>
 </body>
 
 </html>
